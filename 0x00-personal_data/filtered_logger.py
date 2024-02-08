@@ -3,6 +3,7 @@
 Personal Data Module
 """
 
+from typing import List
 import logging
 import re
 from os import environ
