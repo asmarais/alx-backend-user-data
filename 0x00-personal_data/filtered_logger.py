@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Module for handling Personal Data
+Personal Data Module
 """
 from typing import List
 import re
@@ -50,8 +50,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 def main():
     """
-    Obtain a database connection using get_db and retrieves all rows
-    in the users table and display each row under a filtered format
+    The main function
     """
     db = get_db()
     cursor = db.cursor()
