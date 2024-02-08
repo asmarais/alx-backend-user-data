@@ -22,13 +22,15 @@ def filter_datum(fields: List[str], redaction: str,
 
 
 def get_logger() -> logging.Logger:
-    """Returns a Logger Object"""
+    """ Returns a Logger Object """
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
+
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
     logger.addHandler(stream_handler)
+
     return logger
 
 
@@ -47,11 +49,15 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 def main():
-    """A function that takes no argument and returns nothing"""
+    """
+    Obtain a database connection using get_db and retrieves all rows
+    in the users table and display each row under a filtered format
+    """
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
     field_names = [i[0] for i in cursor.description]
+
     logger = get_logger()
 
     for row in cursor:
@@ -70,7 +76,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: list[str]):
+    def __init__(self, fields: List[str]):
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
